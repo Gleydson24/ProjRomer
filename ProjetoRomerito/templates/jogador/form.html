@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">{{ 'Editar Jogador' if jogador else 'Novo Jogador' }}</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('jogador.editar', id=jogador.id) if jogador else url_for('jogador.criar') }}">
+                    <div class="mb-3">
+                        <label for="nickname" class="form-label">Nickname *</label>
+                        <input type="text" class="form-control" id="nickname" name="nickname" value="{{ jogador.nickname if jogador else '' }}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">E-mail *</label>
+                        <input type="email" class="form-control" id="email" name="email" value="{{ jogador.email if jogador else '' }}" required>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <a href="{{ url_for('jogador.index') }}" class="btn btn-secondary">Cancelar</a>
+                        <button type="submit" class="btn btn-success">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Listagem de Jogadores</h2>
+    <a href="{{ url_for('jogador.criar') }}" class="btn btn-primary">+ Novo Jogador</a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped table-hover shadow-sm bg-white rounded">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Nickname</th>
+                <th>E-mail</th>
+                <th>Jogos na Conta</th>
+                <th class="text-center">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for jogador in jogadores %}
+            <tr>
+                <td>{{ jogador.id }}</td>
+                <td><strong>{{ jogador.nickname }}</strong></td>
+                <td>{{ jogador.email }}</td>
+                <td>
+                    <span class="badge bg-secondary">{{ jogador.jogos|length }} jogo(s)</span>
+                </td>
+                <td class="text-center">
+                    <a href="{{ url_for('jogador.perfil', id=jogador.id) }}" class="btn btn-sm btn-info text-white">Perfil / Biblioteca</a>
+                    <a href="{{ url_for('jogador.editar', id=jogador.id) }}" class="btn btn-sm btn-warning">Editar</a>
+                    
+                    <form action="{{ url_for('jogador.excluir', id=jogador.id) }}" method="POST" class="d-inline" onsubmit="return confirm('Excluir este jogador?');">
+                        <button type="submit" class="btn btn-sm btn-danger">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5" class="text-center text-muted">Nenhum jogador cadastrado.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
