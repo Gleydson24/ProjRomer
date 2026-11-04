@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <h2 class="card-title text-primary">{{ categoria.nome }}</h2>
+        <p class="card-text text-muted">{{ categoria.descricao or 'Sem descrição cadastrada.' }}</p>
+        <a href="{{ url_for('categoria.index') }}" class="btn btn-outline-secondary btn-sm">← Voltar para Categorias</a>
+    </div>
+</div>
+
+<h3>Jogos vinculados nesta Categoria (Relacionamento 1:N)</h3>
+
+<div class="table-responsive mt-3">
+    <table class="table table-bordered table-hover bg-white shadow-sm">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Gênero</th>
+                <th>Preço</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for jogo in categoria.jogos %}
+            <tr>
+                <td>{{ jogo.id }}</td>
+                <td><strong>{{ jogo.titulo }}</strong></td>
+                <td>{{ jogo.genero }}</td>
+                <td>R$ {{ "%.2f"|format(jogo.preco) }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="4" class="text-center text-muted">Nenhum jogo vinculado a esta categoria até ao momento.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
